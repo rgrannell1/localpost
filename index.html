@@ -1,15 +1,21 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
   <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Paste & save notes to your bookmarks locally">
+
     <title>localpost</title>
     <link rel="stylesheet" href="style.css">
     <script src="./index.js"></script>
   </head>
 
-  <body>
+  <body onload="onPageLoad()">
     <main>
       <h1>🌈 localpost</h1>
-      <h2>content:</h2>
+      <label for="content">
+        <h2>content:</h2>
+      </label>
       <textarea id="content" onkeypress="onContentChange()"></textarea>
     </main>
   </body>
