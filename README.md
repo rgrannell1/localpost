@@ -1,6 +1,6 @@
 # 🌈 localpost
 
-Paste & save notes to your bookmarks locally.
+Paste & save notes to your bookmarks locally. It's useful for generating unique URLs for notes to bookmark.
 
 ### Stability Index
 
