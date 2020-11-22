@@ -35,3 +35,8 @@ textarea {
 main {
   height: 100%;
 }
+
+.summary {
+  color: blue;
+  padding-bottom: 20px;
+}

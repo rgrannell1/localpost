@@ -1,4 +1,5 @@
 
+// load from a url on pageload
 const onPageLoad = () => {
   const urlParams = new URLSearchParams(window.location.search)
   const content = urlParams.get('content')
@@ -10,6 +11,7 @@ const onPageLoad = () => {
   }
 }
 
+// update the url on change
 const onContentChange = () => {
   const $content = document.querySelector('#content')
   const text = encodeURIComponent($content.value)
