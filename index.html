@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <meta name="robots" content="noindex">
+    <meta name="googlebot" content="noindex">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1">
     <meta name="description" content="Paste & save notes to your bookmarks locally">
@@ -20,6 +23,9 @@
         <h2>content:</h2>
       </label>
       <textarea id="content" onkeypress="onContentChange()"></textarea>
+
+      <h2>Data URL</h2>
+      <output id="data-url"></output>
     </main>
   </body>
 </html>
