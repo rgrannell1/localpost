@@ -2,15 +2,11 @@
 
 Paste & save notes to your bookmarks locally. It's useful for generating unique URLs for notes to bookmark.
 
-### Stability Index
-
-1, Experimental - This project might die, it's undertested and underdocumented, and redesigns and breaking changes are likely
-
 ### License
 
 The MIT License
 
-Copyright (c) 2020 Róisín Grannell
+Copyright (c) 2023 Róisín Grannell
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
