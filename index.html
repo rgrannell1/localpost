@@ -19,6 +19,10 @@
       <h1>🌈 localpost</h1>
 
       <button
+        id="about-page-button"
+        onclick="onAboutClick()"
+        title="About">[about]</button>
+      <button
         id="copy-page-button"
         onclick="CopyContent.pageUrl()"
         title="Copy this page URL">[page url]</button>
@@ -26,6 +30,22 @@
         id="copy-data-url-button"
         onclick="CopyContent.dataUrl()"
         title="Copy this data URL">[data url]</button>
+
+      <dialog class="hidden" id="about-dialog">
+        <button
+          id="dialog-close-button"
+          onclick="onDialogCloseClick()">x</button>
+        <dl>
+          <dt>what does localpost do?</dt>
+          <dd>it saves notes directly in a URL you can share</dd>
+
+          <dt>is it private?</dt>
+          <dd>localpost does not store user notes</dd>
+
+          <dt>is there an API?</dt>
+          <dd><a href="https://localpost.rgrannell.xyz/api?content=hi">yes</a></dd>
+        </dl>
+      </dialog>
 
       <textarea
         id="content"
