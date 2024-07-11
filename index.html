@@ -22,6 +22,9 @@
         id="about-page-button"
         onclick="onAboutClick()"
         title="About">[about]</button>
+
+      <a href="/api">[api]</a>
+
       <button
         id="copy-page-button"
         onclick="CopyContent.pageUrl()"
@@ -43,7 +46,7 @@
           <dd>localpost does not store user notes</dd>
 
           <dt>is there an API?</dt>
-          <dd><a href="https://localpost.rgrannell.xyz/api?content=hi">yes</a></dd>
+          <dd><a href="https://localpost.rgrannell.xyz/api">yes</a></dd>
         </dl>
       </dialog>
 
@@ -53,7 +56,7 @@
         autocomplete="off"
         autocapitalize="off"
         autofocus="true"
-        onkeypress="onContentChange()"
+        onkeyup="onContentChange()"
         placeholder="type here, save the notes in this URL"></textarea>
     </main>
   </body>
