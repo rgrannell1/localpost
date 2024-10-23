@@ -1,3 +1,3 @@
 #! /usr/bin/env zsh
 
-netlify dev
+npx wrangler pages dev .

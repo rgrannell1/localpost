@@ -1,0 +1,3 @@
+main = "./functions/urls/index.ts"
+name = "urls"
+compatibility_date = "2022-07-26"

@@ -11,33 +11,32 @@
 
     <title>localpost</title>
     <link rel="stylesheet" href="/style.css">
-    <script src="/index.js"></script>
   </head>
 
-  <body onload="onPageLoad()">
-    <main>
+  <script src="/js/index.js" type="module"></script>
+  <body>
       <h1>🌈 localpost</h1>
 
       <button
         id="about-page-button"
-        onclick="onAboutClick()"
         title="About">[about]</button>
 
       <a href="/api">[api]</a>
 
       <button
         id="copy-page-button"
-        onclick="CopyContent.pageUrl()"
         title="Copy this page URL">[page url]</button>
       <button
         id="copy-data-url-button"
-        onclick="CopyContent.dataUrl()"
         title="Copy this data URL">[data url]</button>
 
+      <label for="markdown">
+        <input type="checkbox" id="markdown">
+        markdown?
+      </label>
+
       <dialog class="hidden" id="about-dialog">
-        <button
-          id="dialog-close-button"
-          onclick="onDialogCloseClick()">x</button>
+        <button id="dialog-close-button">x</button>
         <dl>
           <dt>what does localpost do?</dt>
           <dd>it saves notes directly in a URL you can share</dd>
@@ -56,8 +55,8 @@
         autocomplete="off"
         autocapitalize="off"
         autofocus="true"
-        onkeyup="onContentChange()"
         placeholder="type here, save the notes in this URL"></textarea>
     </main>
   </body>
+
 </html>

@@ -1,4 +1,5 @@
-import type { Context } from "@netlify/functions";
+
+import '../../js/lib/markdown.js';
 
 const ALLOWED_METHODS = ["GET", "PUT", "POST", "PATCH", "SEARCH"];
 const HELP_MESSAGE = `
@@ -67,15 +68,28 @@ class ContentUrls {
       encodeURIComponent(content)
     }`;
   }
-  static toDataUrl(content: string) {
-    return `data:text/plain;base64,${btoa(content)}`;
+  static toDataUrl(content: string, markdown: boolean) {
+    if (markdown) {
+      const html = window.markdown.toHTML(content);
+      return `data:text/html;base64,${btoa(html)}`
+    } else {
+      return `data:text/plain;base64,${btoa(content)}`;
+    }
   }
+}
+
+interface Env {
+
 }
 
 /*
  * Convert a content-string to a page-url and a data-url.
  */
-export default async (req: Request, _: Context) => {
+export const onRequest: PagesFunction<Env> = async (ctx: Context) => {
+  const req = ctx.request;
+
+console.log(req)
+
   if (!ALLOWED_METHODS.includes(req.method.toUpperCase())) {
     return new Response(
       `Method Not Allowed. Use ${ALLOWED_METHODS.join(", ")}`,
@@ -89,6 +103,7 @@ export default async (req: Request, _: Context) => {
 
   const parsedUrl = new URL(req.url);
   const contentParams = parsedUrl.searchParams.get("content") ?? "";
+  const markdown = parsedUrl.searchParams.has("markdown") ?? false;
   const reqBody = await req.text();
 
   if (contentParams && reqBody) {
@@ -100,7 +115,7 @@ export default async (req: Request, _: Context) => {
   const content = contentParams ? contentParams : reqBody;
 
   const pageUrl = ContentUrls.toPageUrl(content);
-  const dataUrl = ContentUrls.toDataUrl(content);
+  const dataUrl = ContentUrls.toDataUrl(content, markdown);
 
   if (contentType?.startsWith("application/json")) {
     return new Response(JSON.stringify({
