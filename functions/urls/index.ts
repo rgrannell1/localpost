@@ -1,5 +1,5 @@
 
-import '../../js/lib/markdown.js';
+import { marked } from "marked";
 
 const ALLOWED_METHODS = ["GET", "PUT", "POST", "PATCH", "SEARCH"];
 const HELP_MESSAGE = `
@@ -68,9 +68,11 @@ class ContentUrls {
       encodeURIComponent(content)
     }`;
   }
-  static toDataUrl(content: string, markdown: boolean) {
-    if (markdown) {
-      const html = window.markdown.toHTML(content);
+  static toDataUrl(content: string, useMarkdown: boolean) {
+    if (useMarkdown) {
+      const html = marked.parse(content, {
+        gfm: true
+      }) as string;
       return `data:text/html;base64,${btoa(html)}`
     } else {
       return `data:text/plain;base64,${btoa(content)}`;
@@ -87,8 +89,6 @@ interface Env {
  */
 export const onRequest: PagesFunction<Env> = async (ctx: Context) => {
   const req = ctx.request;
-
-console.log(req)
 
   if (!ALLOWED_METHODS.includes(req.method.toUpperCase())) {
     return new Response(

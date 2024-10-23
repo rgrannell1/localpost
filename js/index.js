@@ -1,5 +1,6 @@
 
-import '/js/lib/markdown.js';
+import {Marked} from '/js/lib/markdown.js';
+const markdown = new Marked();
 
 // load from a url on pageload
 function onPageLoad() {
@@ -76,7 +77,9 @@ class CopyContent {
 
     var url;
     if (isMarkdown) {
-      const html = window.markdown.toHTML($content.value);
+      const html = markdown.parse($content.value, {
+        gfm: true
+      });
       url = `data:text/html;base64,${btoa(html)}`
     } else {
       url = `data:text/plain;base64,${btoa($content.value)}`;

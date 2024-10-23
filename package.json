@@ -4,19 +4,20 @@
   "description": "Paste & save notes to your bookmarks locally. It's useful for generating unique URLs for notes to bookmark.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rgrannell1/localpost.git"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/rgrannell1/localpost/issues"
   },
   "homepage": "https://github.com/rgrannell1/localpost#readme",
   "dependencies": {
-    "@netlify/functions": "^2.8.0"
+    "@netlify/functions": "^2.8.0",
+    "marked": "^14.1.3"
   }
 }
