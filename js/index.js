@@ -70,20 +70,10 @@ class CopyContent {
   }
 
   static dataUrl() {
-    const $button = document.getElementById("copy-data-url-button");
-    const isMarkdown = document.querySelector('#markdown').value === 'on';
-
     const $content = document.querySelector("#content");
+    const $button = document.getElementById("copy-data-url-button");
 
-    var url;
-    if (isMarkdown) {
-      const html = markdown.parse($content.value, {
-        gfm: true
-      });
-      url = `data:text/html;base64,${btoa(html)}`
-    } else {
-      url = `data:text/plain;base64,${btoa($content.value)}`;
-    }
+    const url = `data:text/plain;base64,${btoa($content.value)}`;
 
     const shareData = {
       title: "localpost",
@@ -104,6 +94,35 @@ class CopyContent {
       alert("Unable to copy or share URL");
     }
   }
+
+  static markdownUrl() {
+    const $content = document.querySelector("#content");
+    const $button = document.getElementById("copy-markdown-url-button");
+
+    const html = markdown.parse($content.value, {
+      gfm: true
+    });
+    const url = `data:text/html;base64,${btoa(html)}`
+
+    const shareData = {
+      title: "localpost",
+      text: "save and share data using urls",
+      url,
+    };
+
+    if (navigator.share && navigator.canShare(shareData)) {
+      navigator.share(shareData);
+    } else if (navigator.clipboard) {
+      navigator.clipboard.writeText(url);
+      $button.textContent = "[copied!]";
+
+      setTimeout(() => {
+        $button.textContent = "[markdown url]";
+      }, 1000);
+    } else {
+      alert("Unable to copy or share URL");
+    }
+  }
 }
 
 const $aboutPageButton = document.getElementById("about-page-button");
@@ -114,6 +133,9 @@ $copyPageButton.addEventListener("click", CopyContent.pageUrl);
 
 const $copyDataUrlButton = document.getElementById("copy-data-url-button");
 $copyDataUrlButton.addEventListener("click", CopyContent.dataUrl);
+
+const $copyMarkdownUrlButton = document.getElementById("copy-markdown-url-button");
+$copyMarkdownUrlButton.addEventListener("click", CopyContent.markdownUrl);
 
 const $dialogCloseButton = document.getElementById("dialog-close-button");
 $dialogCloseButton.addEventListener("click", onDialogCloseClick);
