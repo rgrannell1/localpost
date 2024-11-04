@@ -46,82 +46,68 @@ function onContentChange() {
 }
 
 class CopyContent {
-  static pageUrl() {
-    const $button = document.getElementById("copy-page-button");
-
-    const shareData = {
-      title: "localpost",
-      text: "save and share data using urls",
-      url: window.location.href,
-    };
-
+  static share(target, shareData) {
     if (navigator.share && navigator.canShare(shareData)) {
       navigator.share(shareData);
     } else if (navigator.clipboard) {
-      navigator.clipboard.writeText(window.location.href);
-      $button.textContent = "[copied!]";
+      debugger
+      navigator.clipboard.writeText(shareData.url);
+      target.textContent = "[copied!]";
 
       setTimeout(() => {
-        $button.textContent = "[page url]";
-      }, 1000);
+        target.textContent = `[${target.getAttribute('data-default-text')}]`;
+      }, 1_000);
     } else {
       alert("Unable to copy or share URL");
     }
   }
 
-  static dataUrl() {
-    const $content = document.querySelector("#content");
-    const $button = document.getElementById("copy-data-url-button");
+  static getContent() {
+    return document.querySelector("#content");
+  }
 
+  static dataUrl(event) {
+    const $content = CopyContent.getContent();
     const url = `data:text/plain;base64,${btoa($content.value)}`;
 
-    const shareData = {
+    CopyContent.share(event.target, {
       title: "localpost",
       text: "save and share data using urls",
       url,
-    };
-
-    if (navigator.share && navigator.canShare(shareData)) {
-      navigator.share(shareData);
-    } else if (navigator.clipboard) {
-      navigator.clipboard.writeText(url);
-      $button.textContent = "[copied!]";
-
-      setTimeout(() => {
-        $button.textContent = "[data url]";
-      }, 1000);
-    } else {
-      alert("Unable to copy or share URL");
-    }
+    });
   }
 
-  static markdownUrl() {
-    const $content = document.querySelector("#content");
-    const $button = document.getElementById("copy-markdown-url-button");
+  static pageUrl(event) {
+    CopyContent.share(event.target, {
+      title: "localpost",
+      text: "save and share data using urls",
+      url: window.location.href,
+    });
+  }
 
+  static markdownUrl(event) {
+    const $content = CopyContent.getContent();
     const html = markdown.parse($content.value, {
       gfm: true
     });
     const url = `data:text/html;base64,${btoa(html)}`
 
-    const shareData = {
+    CopyContent.share(event.target, {
       title: "localpost",
       text: "save and share data using urls",
       url,
-    };
+    });
+  }
 
-    if (navigator.share && navigator.canShare(shareData)) {
-      navigator.share(shareData);
-    } else if (navigator.clipboard) {
-      navigator.clipboard.writeText(url);
-      $button.textContent = "[copied!]";
+  static bookmarklet(event) {
+    const $content = CopyContent.getContent();
+    const url = `javascript:${$content.value}`;
 
-      setTimeout(() => {
-        $button.textContent = "[markdown url]";
-      }, 1000);
-    } else {
-      alert("Unable to copy or share URL");
-    }
+    CopyContent.share(event.target, {
+      title: "localpost",
+      text: "save and share data using urls",
+      url,
+    });
   }
 }
 
@@ -136,6 +122,9 @@ $copyDataUrlButton.addEventListener("click", CopyContent.dataUrl);
 
 const $copyMarkdownUrlButton = document.getElementById("copy-markdown-url-button");
 $copyMarkdownUrlButton.addEventListener("click", CopyContent.markdownUrl);
+
+const $bookmarkletButton = document.getElementById("copy-bookmarklet-button");
+$bookmarkletButton.addEventListener("click", CopyContent.bookmarklet);
 
 const $dialogCloseButton = document.getElementById("dialog-close-button");
 $dialogCloseButton.addEventListener("click", onDialogCloseClick);
