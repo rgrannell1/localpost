@@ -1,4 +1,5 @@
 
+import '/js/lib/base64.js';
 import {Marked} from '/js/lib/markdown.js';
 const markdown = new Marked();
 
@@ -9,7 +10,7 @@ function onPageLoad() {
 
   const $content = document.querySelector("#content");
   if (content) {
-    $content.value = atob(content) ?? "";
+    $content.value = decodeURIComponent(Base64.decode(content) ?? "");
   }
 }
 
@@ -36,7 +37,7 @@ function onAboutClick() {
 function onContentChange() {
   const $content = document.querySelector("#content");
 
-  const text = btoa($content.value);
+  const text = encodeURIComponent(Base64.encode($content.value));
   if (text) {
     const pageUrl = `?content=${text}`;
     window.history.replaceState("", "", pageUrl);
@@ -50,7 +51,6 @@ class CopyContent {
     if (navigator.share && navigator.canShare(shareData)) {
       navigator.share(shareData);
     } else if (navigator.clipboard) {
-      debugger
       navigator.clipboard.writeText(shareData.url);
       target.textContent = "[copied!]";
 
